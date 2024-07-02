@@ -2,9 +2,7 @@ package com.example.CaseStudy.Controllers;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import java.util.Collections;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,28 +59,31 @@ public class MovieControllerTest {
     }
 
     @Test
-    public void testGetAllMovies() throws Exception {
-        // Creazione di un oggetto Movie con link self
-        Movie movie = new Movie();
-        movie.setId(1L);
-        movie.setTitle("Test Movie");
-        movie.setDirector("Test Director");
-        movie.setYear(2021);
+public void testGetAllMovies() throws Exception {
+    Movie movie = new Movie();
+    movie.setId(1L);
+    movie.setTitle("Test Movie");
+    movie.setDirector("Test Director");
+    movie.setYear(2021);
 
-        // Aggiunta dei link usando EntityModel
-        EntityModel<Movie> movieModel = EntityModel.of(movie,
-                Link.of("/api/movies/" + movie.getId()).withSelfRel(),
-                Link.of("/api/movies/" + movie.getId() + "/details").withRel("details"));
+    EntityModel<Movie> movieModel = EntityModel.of(movie,
+            Link.of("/api/movies/" + movie.getId()).withRel("self"),
+            Link.of("/api/movies/" + movie.getId() + "/details").withRel("details"));
 
-        when(repository.findAll()).thenReturn(Collections.singletonList(movie));
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/movies"))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$").isArray())
-        .andExpect(jsonPath("$[0].title").value("Test Movie"))
-        .andExpect(jsonPath("$[0].id").value(1L)) // Assuming id is present in JSON response
-        .andExpect(jsonPath("$[0].director").value("Test Director"))
-        .andExpect(jsonPath("$[0].year").value(2021));
-    }
+    when(repository.findAll()).thenReturn(Collections.singletonList(movie));
+
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/movies"))
+           .andExpect(status().isOk())
+           .andExpect(jsonPath("$").isArray())
+           .andExpect(jsonPath("$[0].title").value("Test Movie"))
+           .andExpect(jsonPath("$[0].id").value(1L))
+           .andExpect(jsonPath("$[0].director").value("Test Director"))
+           .andExpect(jsonPath("$[0].year").value(2021))
+           .andExpect(jsonPath("$[0].links[0].rel").value("self"))
+           .andExpect(jsonPath("$[0].links[0].href").value("/api/movies/1"))
+           .andExpect(jsonPath("$[0].links[1].rel").value("details"))
+           .andExpect(jsonPath("$[0].links[1].href").value("/api/movies/1/details"));
+}
 }
 
 
