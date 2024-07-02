@@ -32,6 +32,7 @@ public class MovieController {
         this.mapper = mapper;
     }
     
+    //tested
     @GetMapping("/countAll")
     public ResponseEntity<Object> countAllMovies() {
         Long count = repository.count();
@@ -49,7 +50,7 @@ public class MovieController {
 
         return ResponseEntity.ok().body(movieModels);
     }
-
+   
     @GetMapping("/movies/{id}")
     public ResponseEntity<EntityModel<Movie>> getMovieById(@PathVariable Long id) {
         Movie movie = repository.findById(id)
@@ -70,6 +71,7 @@ public class MovieController {
         return ResponseEntity.ok().body(movie);
     }
 
+    //tested
     @PostMapping("/addMovie")
     public ResponseEntity<Movie> addMovie(@RequestBody MovieDTO movieDTO) {
         Movie newMovie = mapper.toMovie(movieDTO);

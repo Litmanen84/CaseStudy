@@ -1,9 +1,9 @@
 package com.example.CaseStudy.Mappers;
 
-import com.example.CaseStudy.Entities.Movie;
-import com.example.CaseStudy.Models.MovieDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
+import com.example.CaseStudy.Entities.Movie;
+import com.example.CaseStudy.Models.MovieDTO;
 
 @Mapper(componentModel = "spring")
 public interface MovieMapper {
