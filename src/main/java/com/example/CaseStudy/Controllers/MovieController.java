@@ -39,6 +39,7 @@ public class MovieController {
         return ResponseEntity.ok().body("{\"count\": " + count + "}");
     }
 
+    //tested
     @GetMapping("/movies")
     public ResponseEntity<List<EntityModel<Movie>>> getAllMovies() {
         List<Movie> movies = repository.findAll();
@@ -51,6 +52,7 @@ public class MovieController {
         return ResponseEntity.ok().body(movieModels);
     }
    
+    //tested
     @GetMapping("/movies/{id}")
     public ResponseEntity<EntityModel<Movie>> getMovieById(@PathVariable Long id) {
         Movie movie = repository.findById(id)
@@ -63,6 +65,7 @@ public class MovieController {
         return ResponseEntity.ok().body(movieModel);
     }
 
+    //tested
     @GetMapping("/movies/{id}/details")
     public ResponseEntity<Movie> getMovieDetails(@PathVariable Long id) {
         Movie movie = repository.findById(id)
@@ -79,6 +82,7 @@ public class MovieController {
         return ResponseEntity.ok().body(savedMovie);
     }
 
+    //tested
     @DeleteMapping("/deleteMovie/{id}")
     public ResponseEntity<Movie> deleteMovie(@PathVariable Long id) {
         Movie movie = repository.findById(id)
@@ -87,6 +91,7 @@ public class MovieController {
         return ResponseEntity.ok().body(movie);
     }
 
+    //tested
     @PutMapping("/updateMovie/{id}")
     public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody MovieDTO movieDTO) {
         Movie movie = repository.findById(id)
