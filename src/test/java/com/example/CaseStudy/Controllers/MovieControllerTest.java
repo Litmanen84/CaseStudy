@@ -4,7 +4,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import java.util.Collections;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -44,14 +43,15 @@ public class MovieControllerTest {
     @InjectMocks
     private MovieController controller;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+    // @BeforeEach
+    // public void setUp() {
+    //     MockitoAnnotations.openMocks(this);
+    // }
 
-    @AfterEach
-    public void tearDown() {
+    @BeforeEach
+    public void SetUp() {
         repository.deleteAll();
+        // repository.flush();
     }
 
     @Test
@@ -67,6 +67,20 @@ public class MovieControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().json("{\"count\": 1}"));
     }
+
+    // @Test
+    // public void testCountAllMovies() throws Exception {
+    //     Movie movie = new Movie();
+    //     movie.setTitle("Test Movie");
+    //     movie.setDirector("Test Director");
+    //     movie.setYear(2021);
+    //     repository.save(movie); // Salva il film nel database H2
+
+    //     mockMvc.perform(MockMvcRequestBuilders.get("/api/countAll"))
+    //             .andDo(print())
+    //            .andExpect(status().isOk())
+    //            .andExpect(content().json("{\"count\": 1}"));
+    // }
 
     @Test
     public void testGetAllMovies() throws Exception {
